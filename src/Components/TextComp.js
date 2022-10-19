@@ -10,7 +10,7 @@ const TextComp = ({
     TextInputStyle,
     placeholderTextColor,
     keyBoardType,
-    required
+    
    
 
 }) => {

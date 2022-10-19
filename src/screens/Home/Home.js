@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { View, Text, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
 import ButtonComp from '../../Components/ButtonComp';
 import TextComp from '../../Components/TextComp';
@@ -8,113 +8,88 @@ import styles from './Style'
 
 import imagePath from '../../constants/imagePath'
 import colorPath from '../../constants/colorPath';
+import navigationStrings from '../../constants/navigationStrings';
 
 
-// create a component
-class Home extends Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            firstName: '',
-            lastName: '',
-            age: null,
-            email: ''
-
-        }
-    }
-    Validation = () => {
-        const { firstName, lastName, age, email } = this.state
-        if (firstName == '' ) {
-            alert("Please  Your firt name")
-
-            return
-        }
-        if (lastName == '' ) {
-            alert("Please Your last name")
-
-            return
-        }
-        if (age == '' ) {
-            alert("Please Your age")
-
-            return
-        }
-        if (email == '' ) {
-            alert("Please Your email")
-
-            return
-        }
-        else {
-            alert(firstName + "\n" + lastName + "\n" + age + "\n" + email)
-        }
-    }
+function Home({navigation, route}) {
 
 
-    render() {
-
-        const { firstName, lastName, age, email } = this.state
 
 
-        return (
-            <View style={styles.container}>
-
-                <View style={styles.headerStyle}>
-                    <Image style={styles.ImgStyle} source={imagePath.icBack} />
-
-                    <Text style={styles.txtStyle}>Home</Text>
-                    <Text></Text>
-                </View>
-            
-                <View style={{ marginTop: 32, flex: 1, justifyContent: 'center' }}>
-                    <ScrollView>
-                        <TextComp
-
-                            placeholder='Enter your first name'
-                            TextInputStyle={{backgroundColor:colorPath.pink}}
-                            required={true}
-                            value={firstName}
-                            placeholderTextColor={'white'}
-                            onChangeText={firstName => this.setState({ firstName })} 
-                            />
+    const [state, setState] = useState({
+        firstName: '',
+        lastName: '',
+        age: null,
+        email: ''
+    })
 
 
-                        <TextComp
-                            placeholder='Enter last name'
-                            value={lastName}
-                            placeholderTextColor={'white'}
-                            TextInputStyle={{ backgroundColor: colorPath.green}}
-                            onChangeText={lastName => this.setState({ lastName })} />
+    const { firstName, lastName, age, email } = state
 
-                        <TextComp
-                            placeholder='Enter your age'
-                            value={age}
-                            placeholderTextColor={'white'}
-                            keyBoardType={'numeric'}
-                            TextInputStyle={{ backgroundColor: "#FF69B4" }}
-                            onChangeText={age => this.setState({ age })} />
+    const updateState = (data) => setState((state) => ({ ...state, ...data }))
 
-                        <TextComp
-                            placeholder='Enter your email'
-                            placeholderTextColor={'white'}
-                            value={email}
-                            keyBoardType={'email-address'}
-                            TextInputStyle={{ backgroundColor: "gray" }}
-                            onChangeText={email => this.setState({ email })} />
-                    </ScrollView>
-                </View>
-                <View style={{ flex: 1, justifyContent: "flex-end" }}>
-                    <ButtonComp
-                        btnText='click me'
-                        onPress={this.Validation
-                        }
-                    />
-                </View>
-            </View>
-        );
-    }
+
+const onClickMe = (text) =>{
+    navigation.navigate(navigationStrings.SECOND_SCREEN,{name: text, data:[1,23.54,54], myObject: {name: 'React', rollNo: 343,}})
 }
+    return (
+        <View style={styles.container}>
 
+            <View style={styles.headerStyle}>
+                <Image style={styles.ImgStyle} source={imagePath.icBack} />
+
+                <Text style={styles.txtStyle}>Home</Text>
+                <Text></Text>
+            </View>
+
+            <View style={{ marginTop: 32, flex: 1, justifyContent: 'center' }}>
+                <ScrollView>
+                    <TextComp
+
+                        placeholder='Please enter your first name'
+                        TextInputStyle={{ backgroundColor: colorPath.pink }}
+
+                        value={firstName}
+                        placeholderTextColor={'white'}
+                        onChangeText={firstName => updateState({ firstName })}
+                    />
+
+
+                    <TextComp
+                        placeholder='Please enter last name'
+                        value={lastName}
+                        placeholderTextColor={'white'}
+                        TextInputStyle={{ backgroundColor: colorPath.green }}
+                        onChangeText={lastName => updateState({ lastName })} />
+
+                    <TextComp
+                        placeholder='Please enter your age'
+                        value={age}
+                        placeholderTextColor={'white'}
+                        keyBoardType={'numeric'}
+                        TextInputStyle={{ backgroundColor: "#FF69B4" }}
+                        onChangeText={age => updateState({ age })} />
+
+                    <TextComp
+                        placeholder='Please enter your email'
+                        placeholderTextColor={'white'}
+                        value={email}
+                        keyBoardType={'email-address'}
+                        TextInputStyle={{ backgroundColor: "gray" }}
+                        onChangeText={email => updateState({ email })} />
+
+                </ScrollView>
+            </View>
+            <View style={{ flex: 1, justifyContent: "flex-end" }}>
+                <ButtonComp
+                    btnText='click me'
+                    onPress={()=>onClickMe("Code Brew Labs")}
+                    
+                />
+            </View>
+        </View>
+    )
+}
 
 
 //make this component available to the app

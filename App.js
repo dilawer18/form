@@ -1,18 +1,17 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Home from './src/screens/Home/Home';
+import Routes from './src/Navigation/Routes';
 
 
-class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-       <Home/>
-      </View>
-    );
-  }
+function App() {
+  return (
+    <View style={styles.container}>
+      <Routes />
+    </View>
+  );
 }
+
 
 
 const styles = StyleSheet.create({
